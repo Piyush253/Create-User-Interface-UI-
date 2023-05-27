@@ -1,0 +1,170 @@
+<html>
+<head>
+  <title>User Registration and Login</title>
+  <style>
+    /* CSS styling for the UI */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 4px;
+    }
+    input[type="submit"] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+.link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h2>User Registration</h2>
+    <form id="registrationForm" action="registration_endpoint" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Register">
+    </form>
+    <div class="link">
+      <a href="external_link">External Company/Organization Access</a>
+    </div>
+  </div>
+  <script>
+    // JavaScript code for form submission and validation
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Perform any additional client-side validation if needed
+
+      // Send the registration data to the server-side endpoint for processing
+      // You'll need to implement the server-side logic to handle the registration
+
+      // Example code to send the registration data using fetch
+      fetch("registration_endpoint", {
+        method: "POST",
+        body: JSON.stringify({ username: username, password: password }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(function(response) {
+        if (response.ok) {
+          // Registration successful, perform any necessary actions (e.g., redirect to login page)
+          console.log("Registration successful!");
+        } else {
+          // Registration failed, handle the error (e.g., display an error message)
+          console.log("Registration
+
+
+
+
+User
+Keep the input of username and hashed password (collected in 1a) into the
+backend database of your choice
+ChatGPT
+To store the username and hashed password collected during registration into a backend database, you'll need to use a server-side programming language and a database system. In this example, I'll demonstrate how to store the data in a MySQL database using PHP.
+
+First, make sure you have a MySQL database set up and the necessary credentials to access it. Then, create a PHP script that will handle the registration and store the data into the database. Here's an example:
+
+php
+Copy code
+<?php
+// Get the username and password from the registration form
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// Hash the password using a suitable hashing algorithm (e.g., bcrypt)
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+// Connect to the MySQL database
+$host = 'your_host';
+$dbUsername = 'your_username';
+$dbPassword = 'your_password';
+$dbName = 'your_database_name';
+
+$conn = new mysqli($host, $dbUsername, $dbPassword, $dbName);
+
+// Check for connection errors
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// Prepare and execute the SQL statement to insert the user into the database
+$stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+$stmt->bind_param("ss", $username, $hashedPassword);
+$stmt->execute();
+
+// Close the database connection
+$stmt->close();
+$conn->close();
+
+// Return a success message or redirect to a success page
+echo "Registration successful!";
+?>
+Make sure to replace the placeholders (your_host, your_username, your_password, your_database_name) with your actual database details.
+
+In this example, I assume you have a MySQL database table named users with columns username and password to store the registered user data. Adjust the table name and column names according to your database schema.
+
+Once you have this PHP script set up on your server, update the action attribute of the registration form in the HTML code to point to the URL of this PHP script, like so:
+
+html
+Copy code
+<form id="registrationForm" action="register.php" method="POST">
+Now, when a user submits the registration form, the data will be sent to the register.php script, which will hash the password and store the username and hashed password in the MySQL database.
+
+
+
+
+
+User
+A link for external company/organisation to access.
+ChatGPT
+To provide a link for external companies/organizations to access, you can add an anchor tag (<a>) with the appropriate URL in your HTML code. Here's an example:
+
+html
+Copy code
+<div class="link">
+  <a href="https://www.external-company.com">External Company/Organization Access</a>
+</div>
+Replace "https://www.external-company.com" with the actual URL that should be accessible to external companies/organizations.
+
+When a user clicks on the "External Company/Organization Access" link, they will be redirected to the specified URL.
