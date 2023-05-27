@@ -1,0 +1,56 @@
+Download the mongodb databse from google 
+
+
+
+
+<?php
+// Get the username and password from the registration form
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// Hash the password using a suitable hashing algorithm (e.g., bcrypt)
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+// Connect to the MySQL database
+$host = 'your_host';
+$dbUsername = 'your_username';
+$dbPassword = 'your_password';
+$dbName = 'your_database_name';
+$conn = new mysqli($host, $dbUsername, $dbPassword, $dbName);
+
+// Check for connection errors
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// Prepare and execute the SQL statement to insert the user into the database
+$stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+$stmt->bind_param("ss", $username, $hashedPassword);
+$stmt->execute();
+
+// Close the database connection
+$stmt->close();
+$conn->close();
+// Return a success message or redirect to a success page
+echo "Registration successful!";
+?>
+
+
+
+Make sure to replace the placeholders (your_host, your_username, your_password, your_database_name) with your actual database details.
+
+In this example, I assume you have a MySQL database table named users with columns username and password to store the registered user data. Adjust the table name and column names according to your database schema
+
+
+A link for external company/organisation to access.
+
+
+
+<div class="link">
+  <a href="https://www.external-company.com">External Company/Organization Access</a>
+</div>
+Replace "https://www.external-company.com" with the actual URL that should be accessible to external companies/organizations.
+
+When a user clicks on the "External Company/Organization Access" link, they will be redirected to the specified URL.
+
+
